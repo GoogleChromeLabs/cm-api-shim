@@ -1,4 +1,4 @@
-# Polyfills for the Crendential Management API
+# Polyfills for the Credential Management API
 The Credential Management API gained additional features that will be supported
 by Google Chrome version 60 and onwards. This repository includes polyfills for
 these features, so that developers can use the new API features while supporting
@@ -60,7 +60,7 @@ Example Code:
 ``` js
 let cred = await navigator.credentials.get({password: true});
 if (PasswordCredential.prototype.password) {
-  let body = { id: cred.id, password: cred.password };
+  let body = {id: cred.id, password: cred.password};
   fetch('my_endpoint.html', {body : body}).then(result => {
       // Handle server response.
   });
