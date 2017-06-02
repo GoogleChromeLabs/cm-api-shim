@@ -1,7 +1,13 @@
+# Polyfills for the Crendential Management API
+The Credential Management API gained additional features that will be supported
+by Google Chrome version 60 and onwards. This repository includes polyfills for
+these features, so that developers can use the new API features while supporting
+old and new browser versions.
+
 ## How to use
 Simply include `cm-api-shim.js` in your project, for example in the following
 way:
-```html
+``` html
 <script src="https://raw.githubusercontent.com/GoogleChrome/cm-api-shim/master/cm-api-shim.js"></script>
 ```
 
@@ -35,7 +41,7 @@ Currently, both `password` and `federated` are supported as keys, which will
 try to create a `PasswordCredential` or `FederatedCredential`.
 
 Example Use:
-```js
+``` js
 let cred = await navigator.credentials.create({password: {
   id: "Foo",
   password: "Bar",
@@ -51,7 +57,7 @@ For this use case it is suggested to detect whether access to passwords is
 possible or not and dispatch accordingly.
 
 Example Code:
-```js
+``` js
 let cred = await navigator.credentials.get({password: true});
 if (PasswordCredential.prototype.password) {
   let body = { id: cred.id, password: cred.password };
