@@ -59,7 +59,7 @@ possible or not and dispatch accordingly.
 Example Code:
 ``` js
 let cred = await navigator.credentials.get({password: true});
-if (PasswordCredential.prototype.password) {
+if (cred.password !== undefined) {
   let body = {id: cred.id, password: cred.password};
   fetch('my_endpoint.html', {body : body}).then(result => {
       // Handle server response.
