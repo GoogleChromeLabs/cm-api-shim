@@ -8,8 +8,10 @@ old and new browser versions.
 Simply include `cm-api-shim.js` in your project, for example in the following
 way:
 ``` html
-<script src="https://raw.githubusercontent.com/GoogleChrome/cm-api-shim/master/cm-api-shim.js"></script>
+<script src="./cm-api-shim.js"></script>
 ```
+
+You can install the library locally by running `bower install cm-api-shim`.
 
 ## Supported Features
 The following features will be supported through the use of this library:
