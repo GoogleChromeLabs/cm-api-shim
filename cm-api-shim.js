@@ -30,7 +30,7 @@
 (function() {
   // Return early if CM API is not available or support for the mediation enum
   // is already present.
-  if (!navigator.credentials || PasswordCredential.prototype.password)
+  if (!navigator.credentials || !navigator.credentials.requireUserMediation)
     return;
 
   var oldGet = navigator.credentials.get.bind(navigator.credentials);

@@ -1,0 +1,20 @@
+{
+  "name": "cm-api-shim",
+  "main": "cm-api-shim.js",
+  "authors": [
+    "Jan Wilken Dörrie <jdoerrie@google.com>"
+  ],
+  "description": "A shim library for the updated Credential Management API (June 2017).",
+  "keywords": [
+    "Credential Management API",
+    "shim"
+  ],
+  "license": "Apache-2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
