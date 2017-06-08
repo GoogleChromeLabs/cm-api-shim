@@ -15,24 +15,17 @@
 // This file includes polyfills for recent features added to the Credential
 // Management API.
 
-// Polyfill for navigator.credentials.preventSilentAccess.
 (function() {
-  // Return early if CM API is not available or preventSilentAccess is already
+  // Return early if CM API is not available or the new features are already
   // present.
   if (!navigator.credentials || navigator.credentials.preventSilentAccess)
     return;
 
+  // Polyfill for navigator.credentials.preventSilentAccess.
   navigator.credentials.preventSilentAccess =
       navigator.credentials.requireUserMediation;
-}());
 
-// Polyfill for navigator.credentials.get supporting a mediation enum.
-(function() {
-  // Return early if CM API is not available or support for the mediation enum
-  // is already present.
-  if (!navigator.credentials || !navigator.credentials.requireUserMediation)
-    return;
-
+  // Polyfill for navigator.credentials.get supporting a mediation enum.
   var oldGet = navigator.credentials.get.bind(navigator.credentials);
   navigator.credentials.get = function(options) {
     // If mediation is specified, check whether it contains a valid value and
@@ -56,14 +49,8 @@
     options['unmediated'] = options['mediation'] === 'silent';
     return oldGet(options);
   }
-}());
 
-// Polyfill for navigator.credentials.create.
-(function() {
-  // Return early if CM API is not available or create is already present.
-  if (!navigator.credentials || navigator.credentials.create)
-    return;
-
+  // Polyfill for navigator.credentials.create.
   navigator.credentials.create = function(options) {
     var error_msg = "NotSupportedError: Only 'password' and 'federated'" +
         'credential types are currently supported.';
