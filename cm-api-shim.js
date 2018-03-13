@@ -18,7 +18,8 @@
 (function() {
   // Return early if CM API is not available or the new features are already
   // present.
-  if (!navigator.credentials || navigator.credentials.preventSilentAccess)
+  if (!window.PasswordCredential || !window.FederatedCredential || 
+      navigator.credentials.preventSilentAccess)
     return;
 
   // Polyfill for navigator.credentials.preventSilentAccess.
