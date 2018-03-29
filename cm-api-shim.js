@@ -50,41 +50,50 @@
     return oldGet(options);
   }
 
-  // Polyfill for navigator.credentials.create.
-  navigator.credentials.create = function(options) {
-    var error_msg = "NotSupportedError: Only 'password' and 'federated'" +
-        'credential types are currently supported.';
+  // Polyfill for Credential Management API's navigator.credentials.create.
+  // Other APIs might define this method already, in which case we need to cache
+  // the original version.
+  if (navigator.credentials.create) {
+    var oldCreate = navigator.credentials.create.bind(navigator.credentials);
+  }
 
+  navigator.credentials.create = function(options) {
     // Check whether exactly one option is specified, reject the Promise
     // otherwise.
-    return new Promise(function(resolve, reject) {
-      if (Object.keys(options).length !== 1) {
-        reject(error_msg);
-        return;
-      }
+    if (Object.keys(options).length !== 1) {
+      return Promise.reject('NotSupportedError: Only exactly one credential ' +
+          'option is currently supported.');
+    }
 
-      // Dispatch to the appropriate constructors for 'password' and
-      // 'federated'.
-      if ('password' in options) {
+
+    // Dispatch to the appropriate constructors for 'password' and
+    // 'federated' if applicable.
+    if ('password' in options && window.PasswordCredential) {
+      return new Promise(function(resolve, reject) {
         try {
           resolve(new PasswordCredential(options['password']));
         } catch (e) {
           reject(e);
         }
-        return;
-      }
+      });
+    }
 
-      if ('federated' in options) {
+    if ('federated' in options && window.FederatedCredential) {
+      return new Promise(function(resolve, reject) {
         try {
           resolve(new FederatedCredential(options['federated']));
         } catch (e) {
           reject(e);
         }
-        return;
-      }
+      });
+    }
 
-      // Reject anything else.
-      reject(error_msg);
-    });
+    // Dispatch to old create if possible, otherwise reject anything else.
+    if (oldCreate) {
+      return oldCreate(options);
+    }
+
+    return Promise.reject('NotSupportedError: No valid credential option ' +
+        'was specified.');
   };
 }());
